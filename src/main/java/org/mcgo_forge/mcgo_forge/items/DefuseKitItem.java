@@ -16,10 +16,9 @@ import org.mcgo_forge.mcgo_forge.gameplay.PlayerGameData;
 import org.mcgo_forge.mcgo_forge.gameplay.Team;
 import org.mcgo_forge.mcgo_forge.round.RoundManager;
 import org.mcgo_forge.mcgo_forge.round.RoundState;
-import org.mcgo_forge.mcgo_forge.world.GameMapData;
 
-public class BombItem extends Item {
-    public BombItem(Properties properties) {
+public class DefuseKitItem extends Item {
+    public DefuseKitItem(Properties properties) {
         super(properties);
     }
     
@@ -33,9 +32,9 @@ public class BombItem extends Item {
         ServerPlayer serverPlayer = (ServerPlayer) player;
         PlayerGameData data = PlayerCapabilityProvider.getPlayerData(player);
         
-        // Check if player is on Terrorist team
-        if (data.getTeam() != Team.TERRORIST) {
-            player.sendSystemMessage(Component.literal("Only Terrorists can use the bomb!")
+        // Check if player is on Counter-Terrorist team
+        if (data.getTeam() != Team.COUNTER_TERRORIST) {
+            player.sendSystemMessage(Component.literal("Only Counter-Terrorists can use the defuse kit!")
                     .withStyle(ChatFormatting.RED));
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
@@ -43,49 +42,37 @@ public class BombItem extends Item {
         // Check if round is active
         RoundManager roundManager = RoundManager.getInstance();
         if (roundManager.getCurrentState() != RoundState.ACTIVE) {
-            player.sendSystemMessage(Component.literal("Cannot plant bomb right now!")
+            player.sendSystemMessage(Component.literal("No bomb to defuse right now!")
                     .withStyle(ChatFormatting.RED));
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         
-        // Check if already planted
-        if (roundManager.isBombPlanted()) {
-            player.sendSystemMessage(Component.literal("Bomb is already planted!")
+        // Check if bomb is planted
+        if (!roundManager.isBombPlanted()) {
+            player.sendSystemMessage(Component.literal("No bomb has been planted!")
                     .withStyle(ChatFormatting.RED));
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         
-        // Check if in bomb site
-        GameMapData mapData = GameMapData.get(serverLevel);
-        BlockPos playerPos = player.blockPosition();
-        GameMapData.BombSite site = mapData.getBombSiteAt(playerPos);
-        
-        if (site == null) {
-            player.sendSystemMessage(Component.literal("You must be in a bomb site to plant!")
+        // Check if near bomb (simplified - can add actual bomb entity later)
+        BlockPos bombPos = roundManager.getBombPosition();
+        if (bombPos != null && player.blockPosition().distSqr(bombPos) > 25) { // 5 block radius
+            player.sendSystemMessage(Component.literal("You are too far from the bomb!")
                     .withStyle(ChatFormatting.RED));
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         
-        // Start planting (simplified - instant plant for now, can add progress later)
-        plantBomb(serverLevel, serverPlayer, site);
+        // Start defusing (simplified - instant defuse for now, can add progress later)
+        defuseBomb(serverLevel, serverPlayer);
         
         return InteractionResultHolder.consume(player.getItemInHand(hand));
     }
     
-    private void plantBomb(ServerLevel level, ServerPlayer player, GameMapData.BombSite site) {
+    private void defuseBomb(ServerLevel level, ServerPlayer player) {
         RoundManager roundManager = RoundManager.getInstance();
-        BlockPos playerPos = player.blockPosition();
-        roundManager.setBombPlanted(true);
-        roundManager.setBombPosition(playerPos);
+        roundManager.defuseBomb();
         
-        // Remove bomb from inventory
-        player.getInventory().clearOrCountMatchingItems(
-                stack -> stack.getItem() instanceof BombItem,
-                1,
-                player.inventoryMenu.getCraftSlots()
-        );
-        
-        player.sendSystemMessage(Component.literal("Bomb planted at site " + site.name() + "!")
+        player.sendSystemMessage(Component.literal("Bomb defused!")
                 .withStyle(ChatFormatting.GREEN));
     }
 }

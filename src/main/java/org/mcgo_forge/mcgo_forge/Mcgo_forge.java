@@ -28,6 +28,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.mcgo_forge.mcgo_forge.items.BombItem;
+import org.mcgo_forge.mcgo_forge.items.DefuseKitItem;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -56,6 +57,9 @@ public class Mcgo_forge {
 
     // CS:GO Bomb item
     public static final RegistryObject<Item> BOMB = ITEMS.register("bomb", () -> new BombItem(new Item.Properties().stacksTo(1)));
+    
+    // CS:GO Defuse Kit item
+    public static final RegistryObject<Item> DEFUSE_KIT = ITEMS.register("defuse_kit", () -> new DefuseKitItem(new Item.Properties().stacksTo(1)));
 
     // Creates a creative tab with the id "mcgo_forge:example_tab" for the example item, that is placed after the combat tab
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
@@ -64,6 +68,7 @@ public class Mcgo_forge {
             .displayItems((parameters, output) -> {
             output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
             output.accept(BOMB.get()); // Add bomb item
+            output.accept(DEFUSE_KIT.get()); // Add defuse kit item
             }).build());
 
     public Mcgo_forge() {

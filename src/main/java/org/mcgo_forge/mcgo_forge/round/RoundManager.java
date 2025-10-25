@@ -1,6 +1,7 @@
 package org.mcgo_forge.mcgo_forge.round;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +23,7 @@ public class RoundManager {
     private int ctScore = 0;
     private int stateTimer = 0;
     private boolean bombPlanted = false;
+    private BlockPos bombPosition = null;
     private ServerLevel level;
     
     // Configuration
@@ -104,6 +106,7 @@ public class RoundManager {
     private void startNewRound() {
         roundNumber++;
         bombPlanted = false;
+        bombPosition = null;
         currentState = RoundState.FREEZETIME;
         stateTimer = 0;
         
@@ -210,8 +213,22 @@ public class RoundManager {
         }
     }
     
+    public void setBombPosition(BlockPos pos) {
+        this.bombPosition = pos;
+    }
+    
+    public BlockPos getBombPosition() {
+        return bombPosition;
+    }
+    
     public boolean isBombPlanted() {
         return bombPlanted;
+    }
+    
+    public void defuseBomb() {
+        if (bombPlanted) {
+            endRound(Team.COUNTER_TERRORIST, "Bomb Defused!");
+        }
     }
     
     private void broadcastMessage(Component message) {
