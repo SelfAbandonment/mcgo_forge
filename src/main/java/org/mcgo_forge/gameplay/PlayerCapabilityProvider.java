@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge.gameplay;
+package org.mcgo_forge.gameplay;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.mcgo_forge.mcgo_forge.Mcgo_forge;
+import org.mcgo_forge.Mcgo_forge;
 
 @Mod.EventBusSubscriber(modid = Mcgo_forge.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerCapabilityProvider {

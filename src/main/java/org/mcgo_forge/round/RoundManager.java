@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge.round;
+package org.mcgo_forge.round;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -7,10 +7,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
-import org.mcgo_forge.mcgo_forge.gameplay.PlayerCapabilityProvider;
-import org.mcgo_forge.mcgo_forge.gameplay.PlayerGameData;
-import org.mcgo_forge.mcgo_forge.gameplay.Team;
-import org.mcgo_forge.mcgo_forge.world.GameMapData;
+import org.mcgo_forge.gameplay.PlayerCapabilityProvider;
+import org.mcgo_forge.gameplay.PlayerGameData;
+import org.mcgo_forge.gameplay.Team;
+import org.mcgo_forge.world.GameMapData;
 
 import java.util.List;
 

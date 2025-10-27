@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge.commands;
+package org.mcgo_forge.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -12,11 +12,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import org.mcgo_forge.mcgo_forge.gameplay.PlayerCapabilityProvider;
-import org.mcgo_forge.mcgo_forge.gameplay.PlayerGameData;
-import org.mcgo_forge.mcgo_forge.gameplay.Team;
-import org.mcgo_forge.mcgo_forge.round.RoundManager;
-import org.mcgo_forge.mcgo_forge.world.GameMapData;
+import org.mcgo_forge.gameplay.PlayerCapabilityProvider;
+import org.mcgo_forge.gameplay.PlayerGameData;
+import org.mcgo_forge.gameplay.Team;
+import org.mcgo_forge.round.RoundManager;
+import org.mcgo_forge.world.GameMapData;
 
 import java.util.Collection;
 

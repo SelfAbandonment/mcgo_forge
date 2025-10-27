@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge.gameplay;
+package org.mcgo_forge.gameplay;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

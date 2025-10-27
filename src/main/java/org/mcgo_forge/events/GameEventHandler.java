@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge.events;
+package org.mcgo_forge.events;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -7,9 +7,9 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.mcgo_forge.mcgo_forge.Mcgo_forge;
-import org.mcgo_forge.mcgo_forge.commands.GameCommands;
-import org.mcgo_forge.mcgo_forge.round.RoundManager;
+import org.mcgo_forge.Mcgo_forge;
+import org.mcgo_forge.commands.GameCommands;
+import org.mcgo_forge.round.RoundManager;
 
 @Mod.EventBusSubscriber(modid = Mcgo_forge.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GameEventHandler {

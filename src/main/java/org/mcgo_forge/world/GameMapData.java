@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge.world;
+package org.mcgo_forge.world;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

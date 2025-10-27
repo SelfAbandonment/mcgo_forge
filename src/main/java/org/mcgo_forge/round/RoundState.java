@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge.round;
+package org.mcgo_forge.round;
 
 public enum RoundState {
     WAITING,     // Waiting for players/setup

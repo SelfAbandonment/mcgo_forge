@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge;
+package org.mcgo_forge;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -27,8 +27,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.mcgo_forge.mcgo_forge.items.BombItem;
-import org.mcgo_forge.mcgo_forge.items.DefuseKitItem;
+import org.mcgo_forge.items.BombItem;
+import org.mcgo_forge.items.DefuseKitItem;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
