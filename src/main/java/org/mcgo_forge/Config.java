@@ -1,4 +1,4 @@
-package org.mcgo_forge.mcgo_forge;
+package org.mcgo_forge;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

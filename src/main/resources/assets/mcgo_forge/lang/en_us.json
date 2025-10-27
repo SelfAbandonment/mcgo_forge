@@ -1,0 +1,7 @@
+{
+  "item.mcgo_forge.bomb": "C4 Explosive",
+  "item.mcgo_forge.defuse_kit": "Defuse Kit",
+  "item.mcgo_forge.example_item": "Example Item",
+  "block.mcgo_forge.example_block": "Example Block",
+  "itemGroup.mcgo_forge.example_tab": "MCGO Forge"
+}
