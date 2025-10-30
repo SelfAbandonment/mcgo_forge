@@ -1,0 +1,22 @@
+{
+  "item.mcgo_forge.bomb": "C4 炸弹",
+  "item.mcgo_forge.defuse_kit": "拆弹钳",
+
+  "command.mcgo.start": "开始对局",
+  "command.mcgo.stop": "结束对局",
+  "command.mcgo.team.ct": "分配至反恐精英",
+  "command.mcgo.team.t": "分配至恐怖分子",
+  "command.mcgo.setsite.a": "已设置 A 包点",
+  "command.mcgo.setsite.b": "已设置 B 包点",
+
+  "text.mcgo.round.start": "第 %s 回合开始",
+  "text.mcgo.round.end": "回合结束：%s 方获胜",
+  "text.mcgo.bomb.planted": "C4 已安放！",
+  "text.mcgo.bomb.defused": "C4 已拆除！",
+  "text.mcgo.bomb.exploded": "C4 爆炸！",
+  "item.mcgo_forge.bomb": "C4 Explosive",
+  "item.mcgo_forge.defuse_kit": "Defuse Kit",
+  "item.mcgo_forge.example_item": "Example Item",
+  "block.mcgo_forge.example_block": "Example Block",
+  "itemGroup.mcgo_forge.example_tab": "MCGO Forge"
+}

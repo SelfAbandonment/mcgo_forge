@@ -17,9 +17,9 @@ import org.mcgo_forge.round.RoundManager;
 import org.mcgo_forge.round.RoundState;
 
 /**
- * Abstract base class for all CS:GO game items.
- * Provides common functionality for team validation, round state checking,
- * and message sending to improve code reusability and maintainability.
+ * 所有 CS:GO 游戏物品的抽象基类。
+ * 提供队伍验证、回合状态检查以及消息发送等通用功能，
+ * 以提升代码的复用性和可维护性。
  */
 public abstract class AbstractGameItem extends Item {
     
@@ -40,19 +40,19 @@ public abstract class AbstractGameItem extends Item {
     }
     
     /**
-     * Called when the item is used on the server side.
-     * Override this method to implement server-side item behavior.
+     * 当物品在服务端被使用时调用。
+     * 重写该方法以实现服务端的物品行为。
      */
     protected abstract InteractionResultHolder<ItemStack> useOnServer(
             ServerLevel level, ServerPlayer player, InteractionHand hand);
     
     /**
-     * Checks if the player is on the required team.
-     * 
-     * @param player The player to check
-     * @param requiredTeam The team the player must be on
-     * @param errorMessage The error message to send if validation fails
-     * @return true if validation passes, false otherwise
+     * 检查玩家是否属于指定队伍。
+     *
+     * @param player 要检查的玩家
+     * @param requiredTeam 玩家必须所在的队伍
+     * @param errorMessage 若校验失败要发送的错误信息
+     * @return 若校验通过返回 true，否则返回 false
      */
     protected boolean validateTeam(ServerPlayer player, Team requiredTeam, String errorMessage) {
         PlayerGameData data = PlayerCapabilityProvider.getPlayerData(player);
@@ -64,12 +64,12 @@ public abstract class AbstractGameItem extends Item {
     }
     
     /**
-     * Checks if the current round state matches the required state.
-     * 
-     * @param player The player to send error messages to
-     * @param requiredState The required round state
-     * @param errorMessage The error message to send if validation fails
-     * @return true if validation passes, false otherwise
+     * 检查当前回合状态是否为指定状态。
+     *
+     * @param player 用于接收错误信息的玩家
+     * @param requiredState 需要的回合状态
+     * @param errorMessage 若校验失败要发送的错误信息
+     * @return 若校验通过返回 true，否则返回 false
      */
     protected boolean validateRoundState(ServerPlayer player, RoundState requiredState, String errorMessage) {
         RoundManager roundManager = RoundManager.getInstance();
@@ -81,39 +81,39 @@ public abstract class AbstractGameItem extends Item {
     }
     
     /**
-     * Sends an error message to the player.
-     * 
-     * @param player The player to send the message to
-     * @param message The error message text
+     * 向玩家发送错误信息。
+     *
+     * @param player 接收消息的玩家
+     * @param message 错误消息文本
      */
     protected void sendErrorMessage(ServerPlayer player, String message) {
         player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.RED));
     }
     
     /**
-     * Sends a success message to the player.
-     * 
-     * @param player The player to send the message to
-     * @param message The success message text
+     * 向玩家发送成功信息。
+     *
+     * @param player 接收消息的玩家
+     * @param message 成功消息文本
      */
     protected void sendSuccessMessage(ServerPlayer player, String message) {
         player.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.GREEN));
     }
     
     /**
-     * Gets the player's game data.
-     * 
-     * @param player The player
-     * @return The player's game data
+     * 获取玩家的游戏数据。
+     *
+     * @param player 玩家
+     * @return 玩家游戏数据
      */
     protected PlayerGameData getPlayerData(Player player) {
         return PlayerCapabilityProvider.getPlayerData(player);
     }
     
     /**
-     * Gets the round manager instance.
-     * 
-     * @return The round manager
+     * 获取回合管理器实例。
+     *
+     * @return 回合管理器
      */
     protected RoundManager getRoundManager() {
         return RoundManager.getInstance();

@@ -8,13 +8,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.Objects;
 
-// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
-// Demonstrates how to use Forge's config APIs
+// 示例配置类。不是必需的，但有助于组织配置。
+// 展示如何使用 Forge 的配置 API
 @Mod.EventBusSubscriber(modid = Mcgo_forge.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config
 {
@@ -32,7 +32,7 @@ public class Config
             .comment("What you want the introduction message to be for the magic number")
             .define("magicNumberIntroduction", "The magic number is... ");
 
-    // a list of strings that are treated as resource locations for items
+    // 一组字符串，被当作物品的资源定位符（ResourceLocation）
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
             .comment("A list of items to log on common setup.")
             .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), Config::validateItemName);
@@ -46,7 +46,22 @@ public class Config
 
     private static boolean validateItemName(final Object obj)
     {
-        return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName));
+        if (!(obj instanceof final String itemName)) return false;
+        // 同时支持 "namespace:path" 和 "path" 两种形式；未提供命名空间时默认使用 minecraft
+        String namespace = "minecraft";
+        String path = itemName;
+        int idx = itemName.indexOf(':');
+        if (idx >= 0) {
+            namespace = itemName.substring(0, idx);
+            path = itemName.substring(idx + 1);
+        }
+        if (path.isEmpty()) return false;
+        try {
+            ResourceLocation rl = ResourceLocation.tryParse(namespace + ":" + path);
+            return rl != null && ForgeRegistries.ITEMS.containsKey(rl);
+        } catch (final Exception e) {
+            return false;
+        }
     }
 
     @SubscribeEvent
@@ -56,9 +71,24 @@ public class Config
         magicNumber = MAGIC_NUMBER.get();
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 
-        // convert the list of strings into a set of items
+        // 将字符串列表转换为物品集合
         items = ITEM_STRINGS.get().stream()
-                .map(itemName -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName)))
+                .map(itemName -> {
+                    String namespace = "minecraft";
+                    String path = itemName;
+                    int idx = itemName.indexOf(':');
+                    if (idx >= 0) {
+                        namespace = itemName.substring(0, idx);
+                        path = itemName.substring(idx + 1);
+                    }
+                    try {
+                        ResourceLocation rl = ResourceLocation.tryParse(namespace + ":" + path);
+                        return rl == null ? null : ForgeRegistries.ITEMS.getValue(rl);
+                    } catch (final Exception e) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
     }
 }

@@ -11,11 +11,12 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.mcgo_forge.Mcgo_forge;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = Mcgo_forge.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerCapabilityProvider {
     public static final Capability<PlayerGameData> PLAYER_GAME_DATA = CapabilityManager.get(new CapabilityToken<>() {});
-    public static final ResourceLocation PLAYER_GAME_DATA_ID = new ResourceLocation(Mcgo_forge.MODID, "player_game_data");
+    public static final ResourceLocation PLAYER_GAME_DATA_ID = Objects.requireNonNull(ResourceLocation.tryParse(Mcgo_forge.MODID + ":" + "player_game_data"));
 
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {

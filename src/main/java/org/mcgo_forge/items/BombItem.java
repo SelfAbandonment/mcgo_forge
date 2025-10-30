@@ -11,8 +11,8 @@ import org.mcgo_forge.round.RoundState;
 import org.mcgo_forge.world.GameMapData;
 
 /**
- * C4 Explosive item for Terrorists to plant at bomb sites.
- * Extends AbstractGameItem for common functionality and better maintainability.
+ * 恐怖分子在爆破点安放的 C4 炸弹物品。
+ * 继承自 AbstractGameItem，以复用通用功能并提升可维护性。
  */
 public class BombItem extends AbstractGameItem {
     
@@ -24,23 +24,23 @@ public class BombItem extends AbstractGameItem {
     protected InteractionResultHolder<ItemStack> useOnServer(
             ServerLevel level, ServerPlayer player, InteractionHand hand) {
         
-        // Validate player is on Terrorist team
+        // 校验玩家是否为恐怖分子
         if (!validateTeam(player, Team.TERRORIST, "Only Terrorists can use the bomb!")) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         
-        // Validate round is active
+        // 校验当前是否为进行中的回合
         if (!validateRoundState(player, RoundState.ACTIVE, "Cannot plant bomb right now!")) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         
-        // Check if bomb is already planted
+        // 检查是否已经安放过炸弹
         if (getRoundManager().isBombPlanted()) {
             sendErrorMessage(player, "Bomb is already planted!");
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         
-        // Validate player is in a bomb site
+        // 校验玩家是否处于爆破点内
         GameMapData mapData = GameMapData.get(level);
         BlockPos playerPos = player.blockPosition();
         GameMapData.BombSite site = mapData.getBombSiteAt(playerPos);
@@ -50,34 +50,34 @@ public class BombItem extends AbstractGameItem {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         
-        // Plant the bomb
+        // 安放炸弹
         plantBomb(level, player, site);
         
         return InteractionResultHolder.consume(player.getItemInHand(hand));
     }
     
     /**
-     * Plants the bomb at the specified site.
-     * 
-     * @param level The server level
-     * @param player The player planting the bomb
-     * @param site The bomb site where the bomb is being planted
+     * 在指定爆破点安放炸弹。
+     *
+     * @param level 服务器维度
+     * @param player 安放炸弹的玩家
+     * @param site 将要安放的爆破点
      */
     private void plantBomb(ServerLevel level, ServerPlayer player, GameMapData.BombSite site) {
         BlockPos playerPos = player.blockPosition();
         
-        // Update round manager state
+        // 更新回合管理器状态
         getRoundManager().setBombPlanted(true);
         getRoundManager().setBombPosition(playerPos);
         
-        // Remove bomb from inventory
+        // 从玩家背包移除炸弹
         player.getInventory().clearOrCountMatchingItems(
                 stack -> stack.getItem() instanceof BombItem,
                 1,
                 player.inventoryMenu.getCraftSlots()
         );
         
-        // Send success message
+        // 发送成功消息
         sendSuccessMessage(player, "Bomb planted at site " + site.name() + "!");
     }
 }

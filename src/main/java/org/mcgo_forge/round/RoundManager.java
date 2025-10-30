@@ -26,12 +26,12 @@ public class RoundManager {
     private BlockPos bombPosition = null;
     private ServerLevel level;
     
-    // Configuration
-    private static final int FREEZETIME_DURATION = 15 * 20; // 15 seconds in ticks
-    private static final int ROUND_DURATION = 115 * 20; // 1:55 in ticks
-    private static final int POST_ROUND_DURATION = 5 * 20; // 5 seconds in ticks
-    private static final int BOMB_TIMER = 45 * 20; // 45 seconds in ticks
-    
+    // 配置
+    private static final int FREEZETIME_DURATION = 15 * 20; // 15 秒（游戏刻）
+    private static final int ROUND_DURATION = 115 * 20; // 1:55（游戏刻）
+    private static final int POST_ROUND_DURATION = 5 * 20; // 5 秒（游戏刻）
+    private static final int BOMB_TIMER = 45 * 20; // 45 秒（游戏刻）
+
     private RoundManager() {}
     
     public static RoundManager getInstance() {
@@ -68,7 +68,7 @@ public class RoundManager {
         
         switch (currentState) {
             case WAITING:
-                // Wait for command to start
+                // 等待指令开始
                 break;
                 
             case FREEZETIME:
@@ -110,7 +110,7 @@ public class RoundManager {
         currentState = RoundState.FREEZETIME;
         stateTimer = 0;
         
-        // Reset all players
+        // 重置所有玩家
         List<ServerPlayer> players = level.getPlayers(p -> true);
         for (ServerPlayer player : players) {
             PlayerGameData data = PlayerCapabilityProvider.getPlayerData(player);
@@ -118,14 +118,14 @@ public class RoundManager {
             if (data.getTeam() != Team.SPECTATOR) {
                 data.setAlive(true);
                 
-                // Give starting money for first round, otherwise add round money
+                // 第一回合给予起始金，否则增加回合金钱
                 if (roundNumber == 1) {
                     data.setMoney(800);
                 } else {
-                    data.addMoney(1400); // Loss bonus
+                    data.addMoney(1400); // 失利奖励
                 }
                 
-                // Respawn player at team spawn
+                // 将玩家传送至对应阵营出生点
                 GameMapData mapData = GameMapData.get(level);
                 if (data.getTeam() == Team.TERRORIST && mapData.getTSpawn() != null) {
                     player.teleportTo(mapData.getTSpawn().getX(), mapData.getTSpawn().getY(), mapData.getTSpawn().getZ());
@@ -165,7 +165,7 @@ public class RoundManager {
         }
         
         if (!tAlive && !ctAlive) {
-            // Draw - shouldn't happen but handle it
+            // 平局——不应发生，但仍需处理
             endRound(null, "Draw!");
         } else if (!tAlive) {
             endRound(Team.COUNTER_TERRORIST, "Counter-Terrorists Eliminated Terrorists!");
@@ -208,7 +208,7 @@ public class RoundManager {
     public void setBombPlanted(boolean planted) {
         this.bombPlanted = planted;
         if (planted) {
-            stateTimer = 0; // Reset timer for bomb countdown
+            stateTimer = 0; // 重置计时器用于炸弹倒计时
             broadcastMessage(Component.literal("Bomb has been planted!").withStyle(ChatFormatting.RED));
         }
     }
@@ -248,7 +248,7 @@ public class RoundManager {
             serverPlayer.setGameMode(GameType.SPECTATOR);
         }
         
-        // Check if round should end
+        // 检查是否需要结束回合
         if (currentState == RoundState.ACTIVE) {
             checkWinConditions();
         }
